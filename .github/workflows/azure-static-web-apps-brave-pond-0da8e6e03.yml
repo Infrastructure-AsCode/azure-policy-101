@@ -22,7 +22,7 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install mkdocs-material
-      - run: mkdocs build -d site/azure-policy
+      - run: mkdocs build -d site
       - name: Create index file
         run: |
           echo "<meta http-equiv=\"refresh\" content=\"0; url=https://www.meetup.com/infrastructure-as-code-user-group-oslo/\" />" > site/index.html
@@ -31,7 +31,7 @@ jobs:
         with:
           connection_string: ${{ secrets.STORAGE_ACCOUNT_SECRET }}
           container_name: $web
-          source_dir: '/site/*'
+          source_dir: './site/*'
       # - name: Build And Deploy
       #   id: builddeploy
       #   uses: Azure/static-web-apps-deploy@v1
