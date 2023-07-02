@@ -23,9 +23,6 @@ jobs:
           python-version: '3.11'
       - run: pip install mkdocs-material
       - run: mkdocs build -d site
-      - name: Create index file
-        run: |
-          echo "<meta http-equiv=\"refresh\" content=\"0; url=https://www.meetup.com/infrastructure-as-code-user-group-oslo/\" />" > site/index.html
       - name: 'Copy files to Azure Storage'
         uses: bacongobbler/azure-blob-storage-upload@main
         with:
