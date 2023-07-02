@@ -30,5 +30,6 @@ jobs:
         uses: bacongobbler/azure-blob-storage-upload@main
         with:
           connection_string: ${{ secrets.STORAGE_ACCOUNT_SECRET }}
-          container_name: $web
+          container_name: $web/azure-policy-101
           source_dir: 'site'    
+          overwrite: true          
