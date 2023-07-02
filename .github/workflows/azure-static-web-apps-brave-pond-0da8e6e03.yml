@@ -31,7 +31,7 @@ jobs:
         with:
           connection_string: ${{ secrets.STORAGE_ACCOUNT_SECRET }}
           container_name: $web
-          source_dir: './site/*'
+          source_dir: 'site'
       # - name: Build And Deploy
       #   id: builddeploy
       #   uses: Azure/static-web-apps-deploy@v1
