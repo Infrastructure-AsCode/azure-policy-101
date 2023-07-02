@@ -27,7 +27,7 @@ jobs:
         run: |
           echo "<meta http-equiv=\"refresh\" content=\"0; url=https://www.meetup.com/infrastructure-as-code-user-group-oslo/\" />" > site/index.html
       - name: 'Copy files to Azure Storage'
-        uses: bacongobbler/azure-blob-storage-upload@v1.1.1
+        uses: bacongobbler/azure-blob-storage-upload@main
         with:
           connection_string: ${{ secrets.STORAGE_ACCOUNT_SECRET }}
           container_name: $web
