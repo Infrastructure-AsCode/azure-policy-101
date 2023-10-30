@@ -10,6 +10,7 @@ This is level 200 workshop that covers different aspects of working with [Azure 
 - How to assign Policy
 - How to implement custom Policy
 - How to implement Azure Policy as Code
+- What is Policy driven governance
 - What are the best practices for working with Azure Policy
 
 and much more...
