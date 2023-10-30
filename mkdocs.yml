@@ -75,7 +75,7 @@ plugins:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/Infrastructure-AsCode/working-with-azure-policies
+      link: https://github.com/Infrastructure-AsCode/azure-policy-101
   consent:
     title: Cookie consent
     description: >- 
@@ -87,4 +87,4 @@ extra:
 extra_css:
   - assets/stylesheets/extra.css
 
-repo_url: https://github.com/Infrastructure-AsCode/working-with-azure-policies
+repo_url: https://github.com/Infrastructure-AsCode/azure-policy-101

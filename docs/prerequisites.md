@@ -16,6 +16,10 @@ Please [download](https://code.visualstudio.com/download) and install VS Code. I
 winget install -e --id Microsoft.VisualStudioCode
 ```
 
+## Azure Resource Manager plugin for Visual Studio Code
+
+Install Azure Resource Manager plugin from [marketplace](https://marketplace.visualstudio.com/items?itemName=msazurermtools.azurerm-vscode-tools)
+
 ## Bicep plugin for Visual Studio Code
 
 Install Bicep plugin from [marketplace](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-bicep) 
