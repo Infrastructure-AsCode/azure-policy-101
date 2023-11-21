@@ -17,12 +17,13 @@ and many more...
 
 Workshop is organized as a combination of theoretical blocks with slides and hand-on labs. Estimated time for workshop completion is between 3 and 4 hours.
 
-## Agenda (Work In Progress)
+## Agenda
 
 - Welcome + practical information
 - Azure Policy overview (slides)
 - [Lab-01](labs/lab-01/index.md) - Provision lab resources
-- [Lab-xx](labs/lab-xx/index.md) - Cleaning up resources
+- [Lab-02](labs/lab-02/index.md) - Assign `Require a tag on resource groups` and `Require a tag on resources` deny policies to `iac-ws7-rg` resource group
+- [Lab-09](labs/lab-09/index.md) - Cleaning up resources
 
 
 ## Prerequisites
