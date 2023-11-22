@@ -23,7 +23,7 @@ Workshop is organized as a combination of theoretical blocks with slides and han
 - Azure Policy overview (slides)
 - [Lab-01](labs/lab-01/index.md) - Provision lab resources
 - [Lab-02](labs/lab-02/index.md) - Assign `Require a tag on resource groups` and `Require a tag on resources` deny policies to `iac-ws7-rg` resource group
-- [Lab-09](labs/lab-09/index.md) - Cleaning up resources
+- [Lab-08](labs/lab-08/index.md) - Cleaning up resources
 
 
 ## Prerequisites
