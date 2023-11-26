@@ -7,6 +7,8 @@ This is the most important part of the workshop. We need to clean up all resourc
 Remove all resources that were created during the workshop by running the following command:
 
 ```powershell
+az policy assignment delete -n '[IAC] - Enforce NamingConvention for ResourceGroups'
+
 as group delete --name iac-ws7-test-rg --yes
 az group delete --name iac-ws7-rg --yes
 ```

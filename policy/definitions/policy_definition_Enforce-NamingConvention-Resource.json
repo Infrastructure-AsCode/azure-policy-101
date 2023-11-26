@@ -1,0 +1,67 @@
+{
+  "name": "Enforce-NamingConvention-Resource",
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "apiVersion": "2021-06-01",
+  "scope": null,
+  "properties": {
+    "policyType": "Custom",
+    "mode": "All",
+    "displayName": "Enforce naming convention for resource",
+    "description": "This policy enforces a naming pattern for different resources.",
+    "metadata": {
+      "version": "1.0.0",
+      "category": "Naming convention",
+      "alzCloudEnvironments": [
+        "AzureCloud",
+        "AzureChinaCloud",
+        "AzureUSGovernment"
+      ]
+    },
+    "parameters": {
+      "resourceType": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Resource type",
+          "description": "Resource type to enforce naming pattern.",
+          "strongType": "resourceTypes"
+        }
+      },
+      "resourceAbbreviation": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Resource type abbreviation",
+          "description": "A short name for Azure resource type to use in resource names"
+        }
+      }
+    },
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "[parameters('resourceType')]"
+          },
+          {
+            "allOf": [
+              {
+                "anyOf": [
+                  {
+                    "field": "name",
+                    "notLike": "[concat('*-', parameters('resourceAbbreviation'))]"
+                  },
+                  {
+                    "field": "name",
+                    "notLike": "iac-*"
+                  }
+                ]                
+              }
+            ]
+          }            
+        ]
+      },
+      "then": {
+        "effect": "deny"
+      }
+    }
+  }
+}
