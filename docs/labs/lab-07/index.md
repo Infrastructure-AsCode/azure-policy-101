@@ -8,7 +8,6 @@ Remove all resources that were created during the workshop by running the follow
 
 ```powershell
 az policy assignment delete -n '[IAC] - Enforce NamingConvention for ResourceGroups'
-az policy assignment delete -n '[IAC] - Enforce NamingConvention for ResourceGroups'
 
 as group delete --name iac-ws7-test-rg --yes
 az group delete --name iac-ws7-rg --yes

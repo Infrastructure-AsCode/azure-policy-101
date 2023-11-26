@@ -6,7 +6,6 @@ param parPrefix string = 'iac-ws7'
 param parLocation string = 'norwayeast'
 
 var varHubResourceGroupName = '${parPrefix}-rg'
-var varEastUSRegion = 'eastus'
 
 resource resResourceGroup 'Microsoft.Resources/resourceGroups@2023-07-01' = {
   name: varHubResourceGroupName
@@ -27,7 +26,7 @@ module modNonComplaintHub 'modules/vnet.bicep' = {
   scope: resResourceGroup
   name: 'deploy-vnet2'
   params: {
-    parLocation: varEastUSRegion
+    parLocation: parLocation
     parVirtualNetworkName: 'vnet2'
     parVnetAddressPrefix: '10.11.0.0/25'
   }
@@ -48,15 +47,6 @@ module modComplaintSA 'modules/sa.bicep' = {
   scope: resResourceGroup
   params: {
     parLocation: parLocation
-    parStorageAccountName: take('norwayeast${varUniqueString}', 24)
-  }
-}
-
-module modNoncomplaintSA 'modules/sa.bicep' = {
-  name: 'deploy-sa2'
-  scope: resResourceGroup
-  params: {
-    parLocation: varEastUSRegion
-    parStorageAccountName: take('${varEastUSRegion}${varUniqueString}', 24)
+    parStorageAccountName: take('nsglogs${varUniqueString}', 24)
   }
 }
