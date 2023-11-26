@@ -1,4 +1,4 @@
-# lab-03 - implement Azure policy to enforce naming convention for your Azure resources
+# lab-03 - Implement Azure policies to enforce naming convention for your Azure resources 
 
 
 As part of our [company policy](../../company-policy.md), we need to enforce [naming convention](../../naming-conventions.md) for all Azure resources that we provision. It shouldn't be allowed to create resource if its name doesn't follow naming convention. There are no BuiltIn policies that enforce naming convention, so we need to create custom policy.

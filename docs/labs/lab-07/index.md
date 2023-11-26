@@ -1,4 +1,4 @@
-# lab-08 - cleaning up resources
+# lab-07 - cleaning up resources
 
 This is the most important part of the workshop. We need to clean up all resources that we provisioned during the workshop to avoid unexpected bills.
 
@@ -7,6 +7,7 @@ This is the most important part of the workshop. We need to clean up all resourc
 Remove all resources that were created during the workshop by running the following command:
 
 ```powershell
+az policy assignment delete -n '[IAC] - Enforce NamingConvention for ResourceGroups'
 az policy assignment delete -n '[IAC] - Enforce NamingConvention for ResourceGroups'
 
 as group delete --name iac-ws7-test-rg --yes
