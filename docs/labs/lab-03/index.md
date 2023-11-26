@@ -180,7 +180,7 @@ Check the last item in the `evaluationDetails` array. If should contain
 }
 ```
 
-So it means that resource group name `iac1-ws71-rg` doesn't match `iac-*` pattern, so policy evaluation result is `True` and resource creation is denied.
+That means that resource group name `iac1-ws71-rg` doesn't match `iac-*` pattern, so policy evaluation result is `True` and resource creation is denied.
 
 Let's try another test-case. Run the following command:
 
@@ -203,3 +203,17 @@ Check the `evaluationDetails` array.
 ```
 The last item now shows that resource group name `iac-ws71-rg1` doesn't match `*-rg` pattern, so policy evaluation result is `True` and resource creation is denied. 
 
+Now, let's test that policy allows resource group name from the exception list. Run the following command:
+
+```powershell
+az group create --name cloud-shell-storage-1 --location norwayeast --tags IAC-Department=foobar
+```
+It should allow resource group creation.
+
+Last test-case. Run the following command:
+
+```powershell
+az group create --name iac-ws72-rg --location norwayeast --tags IAC-Department=foobar
+```
+
+It should allow resource group creation.

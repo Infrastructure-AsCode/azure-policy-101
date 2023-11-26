@@ -11,5 +11,7 @@ az policy assignment delete -n '[IAC] - Enforce NamingConvention for ResourceGro
 
 as group delete --name iac-ws7-test-rg --yes
 az group delete --name iac-ws7-rg --yes
+az group delete --name iac-ws72-rg --yes
+az group delete --name cloud-shell-storage-1 --yes
 ```
 
