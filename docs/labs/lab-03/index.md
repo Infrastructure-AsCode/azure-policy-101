@@ -151,7 +151,7 @@ Check that policy assignment was created:
 az policy assignment list  --query [].displayName -otsv  
 ```
 
-## Task #3 - test policy assignment
+## Task #3 - test policy 
 
 Let's test policy assignment by creating resource group that doesn't follow naming convention. Run the following command:
 
@@ -217,3 +217,216 @@ az group create --name iac-ws72-rg --location norwayeast --tags IAC-Department=f
 ```
 
 It should allow resource group creation.
+
+## Task #4 - create policy definition to enforce naming convention for resources
+
+We can use the same logic we used for Resource groups to validate if resource name follows naming convention. That is - to check prefix and suffix of resource name. 
+We can either create separate policy definition for each resource type or we can create one policy definition and use it for different resource types. 
+Azure policy definitions support [input parameters](https://learn.microsoft.com/en-us/azure/governance/policy/concepts/definition-structure?ref=andrewmatveychuk.com#parameters), and we can use policy functions to reference them. There is a corresponding [strongType](https://learn.microsoft.com/en-us/azure/governance/policy/concepts/definition-structure?ref=andrewmatveychuk.com#strongtype) metadata property – `resourceTypes`, to validate inputs against existing resource types in your subscription.
+
+Let's create "generic" policy definition that will enforce naming convention for resources. Create `enforce-naming-convention-resources.bicep` file with the following content:
+
+```bicep
+targetScope = 'subscription'
+
+resource resEnforceNamingConventionResource 'Microsoft.Authorization/policyDefinitions@2021-06-01' = {
+  name: 'Enforce-NamingConvention-Resources'
+  properties: {
+    policyType: 'Custom'
+    mode: 'All'
+    displayName: '[IAC] - Enforce naming convention for resources'
+    description: 'This policy enforces a naming pattern for resources.'
+    metadata: {
+      version: '1.0.0'
+      category: 'Naming convention'
+    }
+    parameters: {
+      resourceType: {
+        type: 'string'
+        metadata: {
+          displayName: 'Resource type'
+          description: 'The resource type to enforce naming convention.'
+          strongType: 'resourceType'
+        }
+      }
+      resourceAbbreviation: {
+        type: 'string'
+        metadata: {
+          displayName: 'Resource abbreviation'
+          description: 'The resource abbreviation to enforce naming convention.'          
+        }        
+      }
+    }
+    policyRule: {
+      if: {
+        allOf: [
+          {
+            field: 'type'
+            equals: '[parameters(\'resourceType\')]'
+          }
+          {
+            anyOf: [
+              {
+                field: 'name'
+                notLike: '[concat(\'*-\', parameters(\'resourceAbbreviation\'))]'
+              }              
+              {
+                field: 'name'
+                notLike: 'iac-*'
+              }
+            ]
+          }
+        ]
+      }
+      then: {
+        effect: 'deny'
+      }
+    }
+  }
+}
+```
+
+Let's go through the code block by block.
+
+`Enforce-NamingConvention-Resources` policy will require two parameters:
+1. `resourceType` - the resource type to enforce naming convention. For example, `Microsoft.ManagedIdentity/userAssignedIdentities` or `Microsoft.Network/networkSecurityGroups`
+2. `resourceAbbreviation` - resource abbreviation to enforce naming convention. For example, `mi` for Managed Identities or `nsg` for Network Security Groups
+
+These parameters are defined under `parameters` section:
+
+```bicep
+...
+parameters: {
+  resourceType: {
+    type: 'string'
+    metadata: {
+      displayName: 'Resource type'
+      description: 'The resource type to enforce naming convention.'
+      strongType: 'resourceType'
+    }
+  }
+  resourceAbbreviation: {
+    type: 'string'
+    metadata: {
+      displayName: 'Resource abbreviation'
+      description: 'The resource abbreviation to enforce naming convention.'          
+    }        
+  }
+}
+...
+```
+
+Note, that `resourceType` parameter has `strongType` metadata property. This property is used to validate input parameter against existing resource types in your subscription. 
+
+The `policyRule` section looks almost the same as for resource groups policy definition. The difference is that we use parameters values in the rule condition with  `[parameters(\'resourceType\')]` and `[parameters(\'resourceAbbreviation\')]` Bicep constructs.
+
+
+Deploy policy definition by running the following command:
+
+```powershell
+az deployment sub create --template-file .\enforce-naming-convention-resources.bicep --location norwayeast
+```
+
+Check that policy definition was created:
+
+```powershell
+az policy definition list --query "[?displayName=='[IAC] - Enforce naming convention for resources']"
+# or  
+az policy definition show -n Enforce-NamingConvention-Resources
+```
+
+Now, let's create new `Enforce naming convention for resources` policy assignment for `Managed Identities` resource type. Create `enforce-naming-convention-mi-assignment.bicep` file with the following content:
+
+```bicep
+param parPolicyDefinitionName string = 'Enforce-NamingConvention-Resources'
+
+var varPolicyAssignmentName = '[IAC] - Enforce NamingConvention for Managed Identity'
+
+resource resAssignment 'Microsoft.Authorization/policyAssignments@2022-06-01' = {
+    name: varPolicyAssignmentName    
+    properties: {      
+      displayName: varPolicyAssignmentName
+      policyDefinitionId: subscriptionResourceId('Microsoft.Authorization/policyDefinitions', parPolicyDefinitionName) 
+      parameters: {
+        resourceType: {
+          value: 'Microsoft.ManagedIdentity/userAssignedIdentities'
+        }
+        resourceAbbreviation:{
+          value: 'mi'
+        }
+      }        
+    }
+}
+
+output outAssignmentId string = resAssignment.id
+```
+
+This policy assignment will be deployed at the scope of `iac-ws7-rg` Resource Group. `Enforce-NamingConvention-Resources` policy definition is deployed to the scope of your subscription. To get policy definition id, we use Bicep  `subscriptionResourceId`  function.
+
+```bicep
+...
+policyDefinitionId: subscriptionResourceId('Microsoft.Authorization/policyDefinitions', parPolicyDefinitionName) 
+...
+```
+
+This function takes resource type and resource name parameters (`Microsoft.Authorization/policyDefinitions` and `parPolicyDefinitionName`) and it returns policy definition id.
+
+`Enforce-NamingConvention-Resources` policy expects two parameters:
+1. `resourceType` - the resource type to enforce naming convention to. In our case it is `Microsoft.ManagedIdentity/userAssignedIdentities`
+2. `resourceAbbreviation` - resource abbreviation to enforce naming convention. Based on our [naming conventions](../../naming-conventions.md), Managed Identities must be suffixed with `mi`
+
+```bicep
+...
+parameters: {
+  resourceType: {
+    value: 'Microsoft.ManagedIdentity/userAssignedIdentities'
+  }
+  resourceAbbreviation:{
+    value: 'mi'
+  }
+}
+...
+```
+
+Deploy policy assignment to the scope of  `iac-ws7-rg` Resource Group by running the following command:
+
+```powershell
+az deployment group create --template-file .\enforce-naming-convention-mi-assignment.bicep -g iac-ws7-rg
+```
+
+Check that policy assignment was created:
+
+```powershell
+az policy assignment list -g iac-ws7-rg --query [].displayName -otsv
+```
+
+## Task #5 - test policy
+
+Now let's test policy assignment by creating managed identity that doesn't follow naming convention. Run the following command:
+
+```powershell
+az identity create --name foobar-ws7-test-mi --resource-group iac-ws7-rg
+```
+
+It should be denied by the `[IAC] - Enforce NamingConvention for Managed Identity`. If you check the `evaluationDetails` array, you should see the following:
+
+```json
+{
+    "result": "True",
+    "expressionKind": "Field",
+    "expression": "name",
+    "path": "name",
+    "expressionValue": "foobar-ws7-test-mi",
+    "targetValue": "iac-*",
+    "operator": "NotLike"
+}
+``` 
+
+Now, let's try to create managed identity that follows naming convention. Run the following command:
+
+```powershell
+az identity create --name iac-ws7-test2-mi --resource-group iac-ws7-rg
+```
+
+It should be allowed by the policy.
+
