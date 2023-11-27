@@ -9,5 +9,6 @@
 - All resources must follow [naming convention](naming-conventions.md).
 - Resource group must inherit tags from Subscription.
 - Virtual Network and Network Security Group (NSG) diagnostic settings must be deployed by policy.
-- NSG flow logs and traffic analytics must be deployed by policy.
-- All Policy Definition, Policy Initiatives (aka definition sets)and Policy Assignments must be prefixed with `[IAC] - ` prefix.
+- All Network Security Groups (NSG) must have flow logs enabled. 
+- NSG flow logs must be deployed and configured by Azure policy.
+- All Policy Definition, Policy Initiatives, and Policy Assignments must be prefixed with `[IAC] - ` prefix.

@@ -153,3 +153,9 @@ It should be denied by the policy as well
 
 
 Feel free to test the remaining resource types.
+
+## Links
+
+- [Azure Policy overview](https://docs.microsoft.com/en-us/azure/governance/policy/overview)
+- [Azure Policy definition structure](https://docs.microsoft.com/en-us/azure/governance/policy/concepts/definition-structure)
+- [Azure Policy Initiative](https://docs.microsoft.com/en-us/azure/governance/policy/concepts/definition-structure#initiative-definition)

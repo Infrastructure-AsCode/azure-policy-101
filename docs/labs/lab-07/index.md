@@ -11,10 +11,14 @@ Remove all resources that were created during the workshop by running the follow
 $assignmentName = (az policy assignment list --query "[?displayName=='[IAC] - Require a IAC-Department tag on resource groups'].name" -otsv)
 az policy assignment delete -n $assignmentName
 az policy assignment delete -n '[IAC] - Enforce NamingConvention for ResourceGroups'
+az policy assignment delete -n '[IAC] - Enforce NSG flow logs'
 
 as group delete --name iac-ws7-test-rg --yes
 az group delete --name iac-ws7-rg --yes
 az group delete --name iac-ws72-rg --yes
 az group delete --name cloud-shell-storage-1 --yes
+
+# Remove all orphan role assignments
+Get-AzRoleAssignment | Where-Object {$_.ObjectType -eq "Unknown"} | Remove-AzRoleAssignment
 ```
 
