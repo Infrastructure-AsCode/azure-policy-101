@@ -15,7 +15,6 @@ az policy assignment delete -n '[IAC] - Enforce NamingConvention for ResourceGro
 Create `policy-definition-set.bicep` file with the following content:
 
 ```bicep
-
 targetScope = 'subscription'
 
 resource resEnforceNamingConventionResources 'Microsoft.Authorization/policyDefinitions@2021-06-01' existing = {
@@ -79,7 +78,9 @@ resource policySetDef 'Microsoft.Authorization/policySetDefinitions@2021-06-01' 
 }
 ```	
 
-Deploy `policy-definition-set.bicep` file:
+As you can see from the code above, we are defining four policy definitions for Managed Identities, Virtual Networks, Network Security Groups and Log Analytics Workspaces. Each policy definition is referencing existing policy `Enforce-NamingConvention-Resources` and passing resource type specific parameters cush as `resourceType` and `resourceAbbreviation`. We then call this Policy Initiative `IAC-Naming-Convention` and it's stored at the subscription level.
+
+Deploy `policy-definition-set.bicep` file at the subscription scope:
 
 ```powershell
 az deployment sub create  --template-file policy-definition-set.bicep --location norwayeast
@@ -126,3 +127,29 @@ az policy assignment show -n '[IAC] - Enforce Naming Convention' -g iac-ws7-rg
 
 ## Task #3 - test policy initiative
 
+Now we can test different variations of resource names and see how policy initiative is working. Let's start with Managed Identity:
+
+```powershell
+az identity create -g iac-ws7-rg -n 'iac-ws73-mi'
+```
+
+This should be fine.
+
+Next try to create MI that doesn't comply with naming convention:
+
+```powershell
+az identity create -g iac-ws7-rg -n 'iac1-ws73-mi'
+```
+
+It should be denied by the policy.
+
+Next, test Virtual Network:
+
+```powershell
+az network vnet create -g iac-ws7-rg -n 'iac1-ws73-vnet' 
+```
+
+It should be denied by the policy as well
+
+
+Feel free to test the remaining resource types.
