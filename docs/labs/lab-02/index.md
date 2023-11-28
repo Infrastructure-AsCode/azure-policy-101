@@ -1,6 +1,6 @@
 # lab-02 - create policy assignment for `Require a tag on resource groups`, `Inherit a tag from the resource group` and `Inherit a tag from the Subscription` policies at `iac-ws7-rg` resource group scope
 
-## Task #1 - Assign `Require a tag on resource groups` policy to the scope of `iac-ws7-rg` resource group using Azure portal
+## Task #1 - Assign `Require a tag on resource groups` policy to your subscription using Azure portal
 
 According to our [company policies](../../company-policy.md), all Resource groups must have a `IAC-Department` tag. 
 
@@ -153,10 +153,21 @@ resource resAssignment 'Microsoft.Authorization/policyAssignments@2022-06-01' = 
     }
 }
 
+var varContributorRoleDefinitionId = '/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c'
+resource resRoleAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
+  name: guid(resAssignment.name, resAssignment.type)
+  properties: {
+    principalId: resAssignment.identity.principalId
+    principalType: 'ServicePrincipal'
+    roleDefinitionId: varContributorRoleDefinitionId
+  }
+}
+
+
 output outAssignmentId string = resAssignment.id
 ```
 
-This is `Modify` type of policy, therefore we need to configure that policy assignment should use System Assigned Managed Identity with `Contributor` role.  
+This is `Modify` type of policy, therefore we need to configure that policy assignment uses System Assigned Managed Identity with `Contributor` role assigned to it.  
 
 Run the following command to deploy the policy assignment to `iac-ws7-rg` resource group:
 
@@ -168,6 +179,9 @@ az deployment group create --name 'assign-policy' --resource-group 'iac-ws7-rg' 
 az policy assignment list -g iac-ws7-rg --query [].displayName -otsv
 ```
 
+Navigate to `iac-ws7-rg->Access control (IAM)->Role assignments` tab and check `Contributor` list. You now should see that new managed identity with the same name as our policy assignment is assigned to `Contributor` role.
+
+![01](../../assets/images/lab-02/rbac-1.png)
 
 ## Task #6 - Test policy
 

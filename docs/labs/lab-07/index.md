@@ -13,6 +13,9 @@ az policy assignment delete -n $assignmentName
 az policy assignment delete -n '[IAC] - Enforce NamingConvention for ResourceGroups'
 az policy assignment delete -n '[IAC] - Enforce NSG flow logs'
 
+# Delete the flow log.
+
+
 az group delete --name iac-ws7-test-rg --yes
 az group delete --name iac-ws7-rg --yes
 az group delete --name iac-ws72-rg --yes
