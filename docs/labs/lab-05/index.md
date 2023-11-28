@@ -1,4 +1,4 @@
-# lab-04 - Implement Deploy If Not Exists (DINE) policy for NSG flow logs
+# lab-05 - Deploy and configure Network Security Group flow logs with `Deploy If Not Exists` (DINE) policy
 
 The [`deployIfNotExists`](https://learn.microsoft.com/en-us/azure/governance/policy/concepts/effects#deployifnotexists) effect makes it possible to deploy an [Azure Resource Manager template (ARM template)](https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/overview) when creating or updating a resource that isn't compliant. Policy assignments with effect set as `DeployIfNotExists` require a [managed identity](https://learn.microsoft.com/en-us/azure/governance/policy/how-to/remediate-resources) to do remediation.
 
