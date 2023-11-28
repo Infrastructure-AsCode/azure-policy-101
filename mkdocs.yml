@@ -6,10 +6,10 @@ nav:
   - Homepage: index.md
   - Prerequisites: prerequisites.md
   - Lab 01 - Provision lab resources: labs/lab-01/index.md
-  - Lab-02 - Assign `Require a tag on resource groups` and `Require a tag on resources` deny policies to `iac-ws7-rg` resource group: labs/lab-02/index.md
+  - Lab-02 - Assign "Require a tag on resource groups" and "Require a tag on resources" deny policies to resource group: labs/lab-02/index.md
   - Lab-03 - Implement Azure policies to enforce naming convention for your Azure resources: labs/lab-03/index.md 
   - Lab-04 - Implement Azure Initiative to group naming convention policy definitions for supported resource types: labs/lab-04/index.md
-  - Lab-05 - Deploy and configure Network Security Group flow logs with `Deploy If Not Exists` (DINE) policy: labs/lab-05/index.md
+  - Lab-05 - Deploy and configure Network Security Group flow logs with "Deploy If Not Exists" (DINE) policy: labs/lab-05/index.md
   - Lab-06 - Azure policy Compliance, Remediation and Exemptions: labs/lab-06/index.md
   - Lab-07 - Cleaning up resources: labs/lab-07/index.md
 
