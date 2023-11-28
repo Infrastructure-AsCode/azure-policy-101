@@ -1,0 +1,83 @@
+{
+  "name": "Enforce-NamingConventions",
+  "type": "Microsoft.Authorization/policySetDefinitions",
+  "apiVersion": "2021-06-01",
+  "scope": null,
+  "properties": {
+    "policyType": "Custom",
+    "displayName": "Enforce Naming Conventions for Resource Groups and Resource.",
+    "description": "Enforce Naming Conventions for Resource Groups and Resource.",
+    "metadata": {
+      "version": "1.0.0",
+      "category": "Naming convention",
+      "source": "https://github.com/Azure/Enterprise-Scale/",
+      "alzCloudEnvironments": [
+        "AzureCloud",
+        "AzureChinaCloud",
+        "AzureUSGovernment"
+      ]
+    },
+    "parameters": {},
+    "policyDefinitions": [
+      {
+        "policyDefinitionReferenceId": "NamingConventionResourceGroup",
+        "policyDefinitionId": "${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Enforce-NamingConvention-ResourceGroup",
+        "parameters": {},
+        "groupNames": []
+      },
+      {
+        "policyDefinitionReferenceId": "NamingConventionKeyVaults",
+        "policyDefinitionId": "${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Enforce-NamingConvention-Resource",
+        "parameters": {
+          "resourceType": {
+            "value": "Microsoft.KeyVault/vaults"
+          },
+          "resourceAbbreviation": {
+            "value": "kv"
+          }          
+        },
+        "groupNames": []
+      },
+      {
+        "policyDefinitionReferenceId": "NamingConventionLogAnalytics",
+        "policyDefinitionId": "${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Enforce-NamingConvention-Resource",
+        "parameters": {
+          "resourceType": {
+            "value": "Microsoft.OperationalInsights/workspaces"
+          },
+          "resourceAbbreviation": {
+            "value": "log"
+          }          
+        },
+        "groupNames": []
+      },
+      {
+        "policyDefinitionReferenceId": "NamingConventionVNet",
+        "policyDefinitionId": "${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Enforce-NamingConvention-Resource",
+        "parameters": {
+          "resourceType": {
+            "value": "Microsoft.Network/virtualNetworks"
+          },
+          "resourceAbbreviation": {
+            "value": "vnet"
+          }          
+        },
+        "groupNames": []
+      },
+      {
+        "policyDefinitionReferenceId": "NamingConventionNSG",
+        "policyDefinitionId": "${varTargetManagementGroupResourceId}/providers/Microsoft.Authorization/policyDefinitions/Enforce-NamingConvention-Resource",
+        "parameters": {
+          "resourceType": {
+            "value": "Microsoft.Network/networkSecurityGroups"
+          },
+          "resourceAbbreviation": {
+            "value": "nsg"
+          }          
+        },
+        "groupNames": []
+      }
+    ],
+    "policyDefinitionGroups": null
+  }
+}
