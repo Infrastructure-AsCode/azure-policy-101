@@ -129,8 +129,17 @@ Let's create new NSG and check that policy will configure flow logs for it:
 az network nsg create -g iac-ws7-rg -n 'iac-ws7-test-nsg'
 ```
 
-Now let's wait for a few minutes and check that policy has configured flow logs for our NSG:
+Now we need to wait for policy to remediate the NSG. It might take up to 15-30 min before policy will start. I suggest you to move on to the next lab and check the status of the policy later.
 
+When `DINE` policy starts, it will create regular ARM deployment. In our case, policy will deploy flowlogs into `NetworkWatcherRG` resource group. You can check the status of the deployment by navigating to the `Your subscription->NetworkWatcherRG->Deployments` and check the status of the deployment.
+
+![pic](../../assets/images/lab-05/policy-deployment-1.png)
+
+Deployments started by policy will be prefixed with `PolicyDeployment-` prefix. You can also check the ARM template that was used for deployment. Open latest `PolicyDeployment-xxx` deployment and navigate to the `Template` tab.
+
+![pic](../../assets/images/lab-05/policy-deployment-2.png)
+
+As you can see, it contains a regular ARM template that deploys `"Microsoft.Network/networkWatchers/flowLogs` resource.
 
 ## Links
 
