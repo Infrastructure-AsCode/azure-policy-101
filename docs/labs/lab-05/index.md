@@ -126,7 +126,7 @@ Now, goto one of your NGSs under `iac-ws7-rg` resource group and check that flow
 Let's create new NSG and check that policy will configure flow logs for it:
 
 ```powershell
-az network nsg create -g iac-ws7-rg -n 'iac-ws7-test-nsg'
+az network nsg create -g iac-ws7-rg -n iac-ws7-test-nsg
 ```
 
 Now we need to wait for policy to remediate the NSG. It might take up to 15-30 min before policy will start. I suggest you to move on to the next lab and check the status of the policy later.

@@ -7,7 +7,7 @@ Initiatives enable you to group several related policy definitions to simplify a
 In previous lab, we already created `[IAC] - Enforce NamingConvention for Managed Identity` policy assignment, so let's delete one first.
 
 ```powershell
-az policy assignment delete -n '[IAC] - Enforce NamingConvention for ResourceGroups'
+az policy assignment delete -n '[IAC] - Enforce NamingConvention for Managed Identity'
 ```
 
 ## Task #1 - create initiative definition
@@ -130,7 +130,7 @@ az policy assignment show -n '[IAC] - Enforce Naming Convention' -g iac-ws7-rg
 Now we can test different variations of resource names and see how policy initiative is working. Let's start with Managed Identity:
 
 ```powershell
-az identity create -g iac-ws7-rg -n 'iac-ws73-mi'
+az identity create -g iac-ws7-rg -n iac-ws73-mi
 ```
 
 This should be fine.
@@ -138,7 +138,7 @@ This should be fine.
 Next try to create MI that doesn't comply with naming convention:
 
 ```powershell
-az identity create -g iac-ws7-rg -n 'iac1-ws73-mi'
+az identity create -g iac-ws7-rg -n iac1-ws73-mi
 ```
 
 It should be denied by the policy.
@@ -146,7 +146,7 @@ It should be denied by the policy.
 Next, test Virtual Network:
 
 ```powershell
-az network vnet create -g iac-ws7-rg -n 'iac1-ws73-vnet' 
+az network vnet create -g iac-ws7-rg -n iac1-ws73-vnet
 ```
 
 It should be denied by the policy as well
