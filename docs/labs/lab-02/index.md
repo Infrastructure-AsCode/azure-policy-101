@@ -90,6 +90,9 @@ Since this is `Modify` policy and it will modify resources, it requires a manage
 ```powershell
 # Create new policy assignment
 az policy assignment create --name "[IAC] - Inherit IAC-Department tag from the resource group" --display-name "[IAC] - Inherit IAC-Department tag from the resource group" --resource-group iac-ws7-rg --policy  cd3aa116-8754-49c9-a813-ad46512ece54 --params '{\"tagName\": { \"value\": \"IAC-Department\"}}' --mi-system-assigned --location norwayeast
+
+# Assign Contributor role to the managed identity
+az role assignment create --role Contributor --assignee $(az policy assignment show -n '[IAC] - Inherit IAC-Department tag from the resource group' -g iac-ws7-rg --query identity.principalId -o tsv) -g iac-ws7-rg
 ```
 
 Now let's check if the policy was created successfully.
@@ -98,6 +101,10 @@ Now let's check if the policy was created successfully.
 # Get all policy assignments for iac-ws7-rg resource group
 az policy assignment list -g iac-ws7-rg --query [].displayName -otsv
 ```
+
+And check that policy assignment managed identity was has correct RBAC settings.
+
+![01](../../assets/images/lab-02/rbac-2.png)
 
 ## Task #4 - Test policy
 

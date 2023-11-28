@@ -7,7 +7,7 @@ Initiatives enable you to group several related policy definitions to simplify a
 In previous lab, we already created `[IAC] - Enforce NamingConvention for Managed Identity` policy assignment, so let's delete one first.
 
 ```powershell
-az policy assignment delete -n '[IAC] - Enforce NamingConvention for Managed Identity'
+az policy assignment delete -g iac-ws7-rg -n '[IAC] - Enforce NamingConvention for Managed Identity'
 ```
 
 ## Task #1 - create initiative definition
