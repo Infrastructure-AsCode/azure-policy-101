@@ -14,10 +14,13 @@ az policy assignment delete -n '[IAC] - Enforce NamingConvention for ResourceGro
 az policy assignment delete -n '[IAC] - Enforce NSG flow logs'
 
 # Delete the flow log.
+az network watcher flow-log delete --location norwayeast --name iac-ws7-test-nsg-iac-ws7-rg-flowlog
+az network watcher flow-log delete --location norwayeast --name iac-ws7-vnet-workload-nsg-iac-ws7-rg-flowlog
+az network watcher flow-log delete --location norwayeast --name vnet2-workload-nsg-iac-ws7-rg-flowlog
 
-
-az group delete --name iac-ws7-test-rg --yes
+# Delete Resource Groups
 az group delete --name iac-ws7-rg --yes
+az group delete --name iac-ws7-test-rg --yes
 az group delete --name iac-ws72-rg --yes
 az group delete --name cloud-shell-storage-1 --yes
 

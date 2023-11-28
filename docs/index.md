@@ -26,7 +26,8 @@ Workshop is organized as a combination of theoretical blocks with slides and han
 - [Lab-03](labs/lab-03/index.md) - Implement Azure policies to enforce naming convention for your Azure resources 
 - [Lab-04](labs/lab-04/index.md) - Implement Azure Initiative to group naming convention policy definitions for supported resource types
 - [Lab-05](labs/lab-05/index.md) - Deploy and configure Network Security Group flow logs with `Deploy If Not Exists` (DINE) policy
-- [Lab-07](labs/lab-08/index.md) - Cleaning up resources
+- [Lab-05](labs/lab-06/index.md) - Azure policy Compliance, Remediation and Exemptions
+- [Lab-07](labs/lab-07/index.md) - Cleaning up resources
 
 
 ## Prerequisites
